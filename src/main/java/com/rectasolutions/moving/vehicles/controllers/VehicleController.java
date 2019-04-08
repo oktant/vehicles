@@ -86,8 +86,15 @@ public class VehicleController {
         vehicleCategoryService.deleteVehicleCategory(vehicleCategory.get());
         return new ResponseEntity<>("The category has been deleted", HttpStatus.OK);
     }
+    @GetMapping("/categories/distance/{distance}")
+    public VehicleCategory getVehicleCategoryByDistance(@PathVariable double distance){
+        return vehicleCategoryService.getVehicleCategoryByDistance(distance);
+    }
 
-
+    @GetMapping("/categories/distance/{distance}/payload/{payload}")
+    public VehicleCategory getVehicleCategoryByPayload(@PathVariable double distance,@PathVariable double payload){
+        return vehicleCategoryService.getVehicleCategoryByPayload(distance,payload);
+    }
 
 
     // VEHICLE MAKES

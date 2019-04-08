@@ -32,4 +32,18 @@ public class VehicleCategoryService {
     public void deleteVehicleCategory(VehicleCategory vehicleCategory) {
         vehicleCategoryRepository.delete(vehicleCategory);
     }
+    public  VehicleCategory getVehicleCategoryByDistance(double distance){
+        Optional<VehicleCategory> optional = vehicleCategoryRepository.findFirstByDistance(distance);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+    public VehicleCategory  getVehicleCategoryByPayload(double distance,double payload){
+        Optional<VehicleCategory> optional = vehicleCategoryRepository.findFirstByPayload(distance,payload);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
 }
