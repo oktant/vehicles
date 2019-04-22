@@ -65,10 +65,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     {
         super.configure(http);
         http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/registration/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/vehicle/logout"))
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/registration/hello*").hasRole("CUST_IND")
+                .antMatchers("/api/v1/vehicle/hello*").hasRole("CUST_IND")
                 .anyRequest().permitAll().and().csrf()
                 .disable();
         //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());

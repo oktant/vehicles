@@ -46,6 +46,11 @@ public class VehicleController {
 
     // VEHICLE CATEGORY
 
+    @GetMapping("/hello")
+    public String hello (Principal principal) {
+        return "Hello "+ principal.getName();
+    }
+
     @GetMapping("/categories")
     public ResponseEntity<List<VehicleCategory>> getVehicleCategories() {
         return new ResponseEntity<>(vehicleCategoryService.getAllVehicleCategories(), HttpStatus.OK);

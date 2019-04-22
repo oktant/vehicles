@@ -7,6 +7,19 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "vehicle_category")
 public class VehicleCategory {
+    public VehicleCategory(){}
+
+    public VehicleCategory(@NotNull String type, @NotNull Boolean instantDelOption, double nextTime, double callDistance, double deliveryDistance, double payload, double volume, VehicleCategory parentId) {
+        this.type = type;
+        this.instantDelOption = instantDelOption;
+        this.nextTime = nextTime;
+        this.callDistance = callDistance;
+        this.deliveryDistance = deliveryDistance;
+        this.payload = payload;
+        this.volume = volume;
+        this.parentId = parentId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -109,5 +122,20 @@ public class VehicleCategory {
 
     public void setParentId(VehicleCategory parentId) {
         this.parentId = parentId;
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleCategory{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", instantDelOption=" + instantDelOption +
+                ", nextTime=" + nextTime +
+                ", callDistance=" + callDistance +
+                ", deliveryDistance=" + deliveryDistance +
+                ", payload=" + payload +
+                ", volume=" + volume +
+                ", parentId=" + parentId +
+                '}';
     }
 }
