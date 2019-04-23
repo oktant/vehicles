@@ -32,7 +32,7 @@ public class VehiclePhotoService {
     }
 
     public List<VehiclePhoto> getVehiclePhotosByVehicleId(int vehicleId){
-        return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).isPresent() ? vehicleService.getVehicleById(vehicleId).get() : null);
+        return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
     }
 
     public ResponseEntity<String> saveVehiclePhoto(MultipartFile[] files, int vehicleId){
@@ -57,7 +57,7 @@ public class VehiclePhotoService {
                         }
                         VehiclePhoto vehiclePhoto = new VehiclePhoto();
                         vehiclePhoto.setPhotoPath(path);
-                        vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).isPresent() ? vehicleService.getVehicleById(vehicleId).get() : null);
+                        vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
                         vehiclePhotoRepository.save(vehiclePhoto);
                     } else {
                         return new ResponseEntity<>("Wrong type for picture", HttpStatus.BAD_REQUEST);
