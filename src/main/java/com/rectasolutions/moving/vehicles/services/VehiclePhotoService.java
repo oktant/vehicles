@@ -32,7 +32,7 @@ public class VehiclePhotoService {
     }
 
     public List<VehiclePhoto> getVehiclePhotosByVehicleId(int vehicleId){
-        return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).get());
+        return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).isPresent() ? vehicleService.getVehicleById(vehicleId).get() : null);
     }
 
     public ResponseEntity<String> saveVehiclePhoto(MultipartFile[] files, int vehicleId){
@@ -52,13 +52,12 @@ public class VehiclePhotoService {
                             dir.mkdirs();
                         String path = "D:/VehiclePhotos/" + fileName;
 
-                        BufferedOutputStream buffStream =
-                                new BufferedOutputStream(new FileOutputStream(new File(path)));
-                        buffStream.write(bytes);
-                        buffStream.close();
+                        try(BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(path)))) {
+                            buffStream.write(bytes);
+                        }
                         VehiclePhoto vehiclePhoto = new VehiclePhoto();
                         vehiclePhoto.setPhotoPath(path);
-                        vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).get());
+                        vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).isPresent() ? vehicleService.getVehicleById(vehicleId).get() : null);
                         vehiclePhotoRepository.save(vehiclePhoto);
                     } else {
                         return new ResponseEntity<>("Wrong type for picture", HttpStatus.BAD_REQUEST);

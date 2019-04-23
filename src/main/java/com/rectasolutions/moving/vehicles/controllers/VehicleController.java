@@ -58,7 +58,7 @@ public class VehicleController {
 
     @GetMapping("/categories/{id}")
     public ResponseEntity<VehicleCategory> getVehicleCategoryById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehicleCategoryService.getVehicleCategoryById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleCategoryService.getVehicleCategoryById(id).isPresent() ? vehicleCategoryService.getVehicleCategoryById(id).get() : null, HttpStatus.OK);
     }
 
     @PostMapping("/categories")
@@ -111,7 +111,7 @@ public class VehicleController {
 
     @GetMapping("/makes/{id}")
     public ResponseEntity<VehicleMake> getVehicleMakeById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehicleMakeService.getVehicleMakeById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleMakeService.getVehicleMakeById(id).isPresent() ? vehicleMakeService.getVehicleMakeById(id).get() : null, HttpStatus.OK);
     }
 
     @GetMapping("/categories/makes/{categoryId}")
@@ -160,7 +160,7 @@ public class VehicleController {
 
     @GetMapping("/models/{id}")
     public ResponseEntity<VehicleModel> getVehicleModelById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehicleModelService.getVehicleModelById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleModelService.getVehicleModelById(id).isPresent() ? vehicleModelService.getVehicleModelById(id).get() : null, HttpStatus.OK);
     }
 
     @GetMapping("/makes/models/{modelId}")
@@ -209,7 +209,7 @@ public class VehicleController {
 
     @GetMapping("/attributes/{id}")
     public ResponseEntity<Attribute> getAttributeById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(attributeService.getAttributeById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(attributeService.getAttributeById(id).isPresent() ? attributeService.getAttributeById(id).get() : null, HttpStatus.OK);
     }
 
     @PostMapping("/attributes")
@@ -253,7 +253,7 @@ public class VehicleController {
 
     @GetMapping("/vehicles/{id}")
     public ResponseEntity<Vehicle> getVehicleById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehicleService.getVehicleById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleService.getVehicleById(id).isPresent() ? vehicleService.getVehicleById(id).get() : null, HttpStatus.OK);
     }
 
     @GetMapping("/categories/vehicles/{categoryId}")
@@ -309,7 +309,7 @@ public class VehicleController {
 
     @GetMapping("/vehicle_attributes/{id}")
     public ResponseEntity<VehicleAttribute> getVehicleAttributeById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehicleAttributeService.getVehicleAttributeById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehicleAttributeService.getVehicleAttributeById(id).isPresent() ? vehicleAttributeService.getVehicleAttributeById(id).get() : null, HttpStatus.OK);
     }
 
     @GetMapping("/attributes/vehicle_attributes/{attributeId}")
@@ -363,7 +363,7 @@ public class VehicleController {
 
     @GetMapping("/photos/{id}")
     public ResponseEntity<VehiclePhoto> getVehiclePhotoById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(vehiclePhotoService.getVehiclePhotoById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(vehiclePhotoService.getVehiclePhotoById(id).isPresent() ? vehiclePhotoService.getVehiclePhotoById(id).get() : null, HttpStatus.OK);
     }
 
     @GetMapping("/vehicles/photos/{vehicleId}")
