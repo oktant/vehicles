@@ -21,10 +21,6 @@ public class VehicleCategoryService {
         return vehicleCategoryRepository.findAll();
     }
 
-//    public List<VehicleCategory> getVehicleCategoriesByParentId(int parentId){
-//        return vehicleCategoryRepository.findByVehicleCategory(parentId);
-//    }
-
     public VehicleCategory saveVehicleCategory(VehicleCategory vehicleCategory){
         return vehicleCategoryRepository.save(vehicleCategory);
     }

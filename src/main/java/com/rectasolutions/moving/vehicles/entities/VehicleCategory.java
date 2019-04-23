@@ -1,24 +1,11 @@
 package com.rectasolutions.moving.vehicles.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "vehicle_category")
 public class VehicleCategory {
-    public VehicleCategory(){}
-
-    public VehicleCategory(@NotNull String type, @NotNull Boolean instantDelOption, double nextTime, double callDistance, double deliveryDistance, double payload, double volume, VehicleCategory parentId) {
-        this.type = type;
-        this.instantDelOption = instantDelOption;
-        this.nextTime = nextTime;
-        this.callDistance = callDistance;
-        this.deliveryDistance = deliveryDistance;
-        this.payload = payload;
-        this.volume = volume;
-        this.parentId = parentId;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

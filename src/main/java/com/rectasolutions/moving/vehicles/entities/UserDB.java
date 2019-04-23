@@ -3,7 +3,6 @@ package com.rectasolutions.moving.vehicles.entities;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity

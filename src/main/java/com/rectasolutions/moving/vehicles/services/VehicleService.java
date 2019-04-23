@@ -1,18 +1,12 @@
 package com.rectasolutions.moving.vehicles.services;
 
-import com.rectasolutions.moving.vehicles.entities.Attribute;
-import com.rectasolutions.moving.vehicles.entities.UserDB;
 import com.rectasolutions.moving.vehicles.entities.Vehicle;
-import com.rectasolutions.moving.vehicles.entities.VehicleAttribute;
 import com.rectasolutions.moving.vehicles.repositories.VehicleAttributeRepository;
 import com.rectasolutions.moving.vehicles.repositories.VehiclesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
