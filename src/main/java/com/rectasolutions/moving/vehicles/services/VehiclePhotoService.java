@@ -12,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -72,18 +76,18 @@ public class VehiclePhotoService {
 
     private boolean checkPhotoType(String contentType) {
         final List<String> contentTypeList = Arrays.asList("image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/svg+xml", "image/tiff", "image/vnd.microsoft.icon", "image/vnd.wap.wbmp", "image/webp");
-        if (contentTypeList.contains(contentType)) {
-            return true;
-        }
-        return false;
+        return contentTypeList.contains(contentType);
     }
 
     public ResponseEntity<String> deleteVehiclePhoto(VehiclePhoto vehiclePhoto) {
-        File file = new File(vehiclePhoto.getPhotoPath());
-        if (file.delete()){
+        Path path = Paths.get(vehiclePhoto.getPhotoPath());
+        try {
+            Files.delete(path);
             vehiclePhotoRepository.delete(vehiclePhoto);
             return new ResponseEntity<>("The photo has been deleted", HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Delete operation is failed", HttpStatus.BAD_REQUEST);
     }
 }

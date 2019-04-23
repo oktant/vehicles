@@ -1,7 +1,9 @@
 package com.rectasolutions.moving.vehicles.utils;
 
-public class Assistant {
-    protected static boolean windows;
+public final class Assistant {
+    private Assistant(){}
+
+    private static boolean windows;
 
     static  {
         String os = System.getProperty("os.name");
