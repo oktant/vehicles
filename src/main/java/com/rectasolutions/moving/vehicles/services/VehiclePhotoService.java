@@ -86,7 +86,6 @@ public class VehiclePhotoService {
             vehiclePhotoRepository.delete(vehiclePhoto);
             return new ResponseEntity<>("The photo has been deleted", HttpStatus.OK);
         } catch (IOException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
