@@ -5,7 +5,6 @@ import com.rectasolutions.moving.vehicles.repositories.AttributeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -25,11 +24,12 @@ class AttributeServiceTest {
     @Mock
     private AttributeRepository attributeRepository;
 
-    @InjectMocks
+    @Mock
     private AttributeService attributeService;
 
     @BeforeEach
     void setUp() {
+        attributeService = new AttributeService(attributeRepository);
         MockitoAnnotations.initMocks(this);
     }
 
@@ -76,7 +76,8 @@ class AttributeServiceTest {
 
     @Test
     void deleteAttribute() {
-        attributeService.deleteAttribute(any(Attribute.class));
+        doNothing().when(attributeService).deleteAttribute(any(Attribute.class));
+        attributeService.deleteAttribute(new Attribute());
         verify(attributeService).deleteAttribute(any(Attribute.class));
     }
 }

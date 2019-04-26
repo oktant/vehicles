@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class AttributeService {
-    @Autowired
     private AttributeRepository attributeRepository;
+
+    @Autowired
+    AttributeService(AttributeRepository attributeRepository){
+        this.attributeRepository = attributeRepository;
+    }
 
     public Optional<Attribute> getAttributeById(int id){
         return attributeRepository.findById(id);

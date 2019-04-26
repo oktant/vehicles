@@ -22,11 +22,14 @@ import java.util.Optional;
 
 @Service
 public class VehiclePhotoService {
-    @Autowired
     private VehiclePhotoRepository vehiclePhotoRepository;
+    private VehicleService vehicleService;
 
     @Autowired
-    private VehicleService vehicleService;
+    public VehiclePhotoService(VehiclePhotoRepository vehiclePhotoRepository, VehicleService vehicleService){
+        this.vehiclePhotoRepository = vehiclePhotoRepository;
+        this.vehicleService = vehicleService;
+    }
 
     public Optional<VehiclePhoto> getVehiclePhotoById(int id){
         return vehiclePhotoRepository.findById(id);

@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class VehicleMakeService {
-    @Autowired
     private VehicleMakeRepository vehicleMakeRepository;
+
+    @Autowired
+    public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository){
+        this.vehicleMakeRepository = vehicleMakeRepository;
+    }
 
     public Optional<VehicleMake> getVehicleMakeById(int id){
         return vehicleMakeRepository.findById(id);
