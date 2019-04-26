@@ -56,8 +56,7 @@ class AttributeServiceTest {
 
     @Test
     void getAllAttributes() {
-        List<Attribute> exampleList = attributeList;
-        when(attributeService.getAllAttributes()).thenReturn(exampleList);
+        when(attributeService.getAllAttributes()).thenReturn(attributeList);
         assertNotNull(attributeService.getAllAttributes());
         assertEquals(1,attributeService.getAllAttributes().get(0).getId());
         assertEquals(2,attributeService.getAllAttributes().get(1).getId());
