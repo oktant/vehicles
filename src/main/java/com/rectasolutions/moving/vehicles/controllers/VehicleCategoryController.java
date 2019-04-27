@@ -71,6 +71,6 @@ public class VehicleCategoryController {
 
     @GetMapping("/categories/distance/{distance}/payload/{payload}")
     public VehicleCategory getVehicleCategoryByPayload(@PathVariable double distance,@PathVariable double payload){
-        return vehicleCategoryService.getVehicleCategoryByPayload(distance,payload);
+        return vehicleCategoryService.getVehicleCategoryByDistanceAndPayload(distance,payload);
     }
 }

@@ -39,7 +39,7 @@ public class VehicleCategoryService {
         }
         return null;
     }
-    public VehicleCategory  getVehicleCategoryByPayload(double distance,double payload){
+    public VehicleCategory  getVehicleCategoryByDistanceAndPayload(double distance,double payload){
         Optional<VehicleCategory> optional = vehicleCategoryRepository.findFirstByPayload(distance,payload);
         if(optional.isPresent()){
             return optional.get();
