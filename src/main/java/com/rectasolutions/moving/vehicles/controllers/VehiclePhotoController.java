@@ -35,8 +35,9 @@ public class VehiclePhotoController {
         return new ResponseEntity<>(vehiclePhotoService.getVehiclePhotosByVehicleId(vehicleId), HttpStatus.OK);
     }
 
-    @PostMapping("/photos")
-    public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files, @RequestParam(value = "vehicleId") int vehicleId) {
+    @PostMapping(value = "/photos", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files,
+                                                   @RequestParam(value = "vehicleId") int vehicleId) {
         try {
             vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
             return new ResponseEntity<>("Photos have been added", HttpStatus.OK);

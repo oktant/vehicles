@@ -29,7 +29,7 @@ public class VehicleModelController {
         return new ResponseEntity<>(vehicleModelService.getVehicleModelById(id).orElse(null), HttpStatus.OK);
     }
 
-    @GetMapping("/makes/models/{modelId}")
+    @GetMapping("/makes/models/{makeId}")
     public ResponseEntity<List<VehicleModel>> getVehicleModelsByMakeId(@PathVariable("makeId") int makeId) {
         return new ResponseEntity<>(vehicleModelService.getVehicleModelsByMakeId(makeId), HttpStatus.OK);
     }
