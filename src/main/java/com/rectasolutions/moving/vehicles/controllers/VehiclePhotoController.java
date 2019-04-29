@@ -1,6 +1,7 @@
 package com.rectasolutions.moving.vehicles.controllers;
 
 import com.rectasolutions.moving.vehicles.entities.*;
+import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class VehiclePhotoController {
         try {
             vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
             return new ResponseEntity<>("Photos have been added", HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (FailToUploadException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

@@ -4,6 +4,7 @@ import com.rectasolutions.moving.vehicles.entities.UserDB;
 import com.rectasolutions.moving.vehicles.entities.Vehicle;
 import com.rectasolutions.moving.vehicles.entities.VehicleCategory;
 import com.rectasolutions.moving.vehicles.entities.VehiclePhoto;
+import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.repositories.VehiclePhotoRepository;
 import com.rectasolutions.moving.vehicles.utils.Assistant;
 import org.junit.jupiter.api.BeforeEach;
@@ -133,7 +134,7 @@ class VehiclePhotoServiceTest {
     }
 
     @Test
-    void saveVehiclePhoto() throws Exception {
+    void saveVehiclePhoto() throws FailToUploadException {
         Path path = Paths.get("/test/resources/myPhoto.jpg");
         String name = "myPhoto.jpg";
         String originalFileName = "myPhoto.jpg";
