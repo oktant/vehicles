@@ -43,19 +43,20 @@ public class VehiclePhotoService {
         return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
     }
 
-    public ResponseEntity<String> saveVehiclePhoto(MultipartFile[] files, int vehicleId){
+    public VehiclePhoto saveVehiclePhoto(MultipartFile[] files, int vehicleId) throws Exception {
         String fileName = null;
         int countOfFiles = files.length;
-        if (countOfFiles == 0){
-            return new ResponseEntity<>("Unable to upload. File is empty.", HttpStatus.BAD_REQUEST);
-        }
-        for (int i = 0; i < countOfFiles; i++) {
-            try {
+        VehiclePhoto vehiclePhoto = new VehiclePhoto();
+        try{
+            if (countOfFiles == 0){
+                throw new Exception("Unable to upload. File is empty");
+            }
+            for (int i = 0; i < countOfFiles; i++) {
                 fileName = files[i].getOriginalFilename();
                 byte[] bytes = files[i].getBytes();
                 String contentType = files[i].getContentType();
                 if (!checkPhotoType(contentType)) {
-                    return new ResponseEntity<>("Wrong type for picture", HttpStatus.BAD_REQUEST);
+                    throw new Exception("Wrong type for picture");
                 }
                 String rootPath = Assistant.getImagesStorePath();
                 File dir = new File(rootPath);
@@ -66,15 +67,17 @@ public class VehiclePhotoService {
                 try(BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(path)))) {
                     buffStream.write(bytes);
                 }
-                VehiclePhoto vehiclePhoto = new VehiclePhoto();
                 vehiclePhoto.setPhotoPath(path);
                 vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
                 vehiclePhotoRepository.save(vehiclePhoto);
-            } catch (Exception e) {
-                return new ResponseEntity<>("You failed to upload " + fileName + ": " + e.getMessage(), HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>("Number of added photos: " + countOfFiles, HttpStatus.OK);
+        catch (Exception e) {
+            throw new Exception("You failed to upload " + fileName + ": " + e.getMessage());
+        }
+        finally {
+            return vehiclePhoto;
+        }
     }
 
     private boolean checkPhotoType(String contentType) {

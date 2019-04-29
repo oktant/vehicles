@@ -36,7 +36,12 @@ public class VehiclePhotoController {
 
     @PostMapping("/photos")
     public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files, @RequestParam(value = "vehicleId") int vehicleId) {
-        return vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
+        try {
+            vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
+            return new ResponseEntity<>("Photos have been added", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/photos/{id}")
