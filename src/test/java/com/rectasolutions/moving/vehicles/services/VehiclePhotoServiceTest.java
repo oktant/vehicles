@@ -52,6 +52,7 @@ class VehiclePhotoServiceTest {
         user.setStatus("busy");
         user.setLatitude(123);
         user.setLongitude(456);
+        user.setPhotoPath("path");
 
         VehicleCategory vehicleCategory = new VehicleCategory();
         vehicleCategory.setId(1);
