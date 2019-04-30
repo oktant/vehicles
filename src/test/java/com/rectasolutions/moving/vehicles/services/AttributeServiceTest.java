@@ -50,6 +50,7 @@ class AttributeServiceTest {
         Optional<Attribute> exampleAttribute = Optional.of(attributeList.get(0));
         when(attributeService.getAttributeById(1)).thenReturn(exampleAttribute);
         assertNotNull(attributeService.getAttributeById(1));
+        assertNotNull(attributeService.getAttributeById(1).get());
         assertEquals(1, attributeService.getAttributeById(1).get().getId());
         assertEquals("length", attributeService.getAttributeById(1).get().getAttributeName());
     }
@@ -58,6 +59,8 @@ class AttributeServiceTest {
     void getAllAttributes() {
         when(attributeService.getAllAttributes()).thenReturn(attributeList);
         assertNotNull(attributeService.getAllAttributes());
+        assertNotNull(attributeService.getAllAttributes().get(0));
+        assertNotNull(attributeService.getAllAttributes().get(1));
         assertEquals(1,attributeService.getAllAttributes().get(0).getId());
         assertEquals(2,attributeService.getAllAttributes().get(1).getId());
         assertEquals("length",attributeService.getAllAttributes().get(0).getAttributeName());
@@ -67,9 +70,11 @@ class AttributeServiceTest {
     @Test
     void saveAttribute() {
         Attribute newAttribute = new Attribute();
+        newAttribute.setId(3);
         newAttribute.setAttributeName("height");
         when(attributeService.saveAttribute(any(Attribute.class))).thenReturn(newAttribute);
         assertNotNull(attributeService.saveAttribute(new Attribute()));
+        assertEquals(2, attributeService.saveAttribute(new Attribute()).getId());
         assertEquals("height", attributeService.saveAttribute(new Attribute()).getAttributeName());
     }
 
