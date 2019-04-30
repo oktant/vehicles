@@ -74,7 +74,7 @@ class AttributeServiceTest {
         newAttribute.setAttributeName("height");
         when(attributeService.saveAttribute(any(Attribute.class))).thenReturn(newAttribute);
         assertNotNull(attributeService.saveAttribute(new Attribute()));
-        assertEquals(2, attributeService.saveAttribute(new Attribute()).getId());
+        assertEquals(3, attributeService.saveAttribute(new Attribute()).getId());
         assertEquals("height", attributeService.saveAttribute(new Attribute()).getAttributeName());
     }
 
