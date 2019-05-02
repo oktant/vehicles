@@ -66,15 +66,4 @@ public class UserDB {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    @Override
-    public String toString() {
-        return "UserDB{" +
-                "id='" + id + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

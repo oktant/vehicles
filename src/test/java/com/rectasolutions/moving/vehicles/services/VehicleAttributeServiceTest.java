@@ -44,6 +44,7 @@ class VehicleAttributeServiceTest {
         user.setStatus("busy");
         user.setLatitude(123);
         user.setLongitude(456);
+        user.setPhotoPath("path");
 
         VehicleCategory vehicleCategory = new VehicleCategory();
         vehicleCategory.setId(1);
@@ -82,11 +83,7 @@ class VehicleAttributeServiceTest {
         expectedAttribute.setId(1);
         expectedAttribute.setAttributeName("length");
 
-        UserDB expectedUser = new UserDB();
-        expectedUser.setId("1");
-        expectedUser.setStatus("busy");
-        expectedUser.setLatitude(123);
-        expectedUser.setLongitude(456);
+        UserDB expectedUser = vehicleAttributeList.get(0).getVehicle().getUser();
 
         VehicleCategory expectedVehicleCategory = new VehicleCategory();
         expectedVehicleCategory.setId(1);
@@ -115,10 +112,11 @@ class VehicleAttributeServiceTest {
         assertEquals(expectedAttribute.getId(), vehicleAttributeService.getVehicleAttributeById(1).get().getAttribute().getId());
         assertEquals(expectedAttribute.getAttributeName(), vehicleAttributeService.getVehicleAttributeById(1).get().getAttribute().getAttributeName());
         assertEquals(expectedVehicle.getId(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getId());
-        assertEquals(expectedUser.getId(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getId());
-        assertEquals(expectedUser.getStatus(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getStatus());
-        assertEquals(expectedUser.getLatitude(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getLatitude());
-        assertEquals(expectedUser.getLongitude(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getLongitude());
+        assertEquals("1", vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getId());
+        assertEquals("busy", vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getStatus());
+        assertEquals(123, vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getLatitude());
+        assertEquals(456, vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getLongitude());
+        assertEquals("path", vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getUser().getPhotoPath());
         assertEquals(expectedVehicleCategory.getId(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getVehicleCategory().getId());
         assertEquals(expectedVehicleCategory.getType(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getVehicleCategory().getType());
         assertEquals(expectedVehicleCategory.getCallDistance(), vehicleAttributeService.getVehicleAttributeById(1).get().getVehicle().getVehicleCategory().getCallDistance());

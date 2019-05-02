@@ -110,19 +110,4 @@ public class VehicleCategory {
     public void setParentId(VehicleCategory parentId) {
         this.parentId = parentId;
     }
-
-    @Override
-    public String toString() {
-        return "VehicleCategory{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", instantDelOption=" + instantDelOption +
-                ", nextTime=" + nextTime +
-                ", callDistance=" + callDistance +
-                ", deliveryDistance=" + deliveryDistance +
-                ", payload=" + payload +
-                ", volume=" + volume +
-                ", parentId=" + parentId +
-                '}';
-    }
 }

@@ -4,14 +4,22 @@ import com.rectasolutions.moving.vehicles.entities.UserDB;
 import com.rectasolutions.moving.vehicles.entities.Vehicle;
 import com.rectasolutions.moving.vehicles.entities.VehicleCategory;
 import com.rectasolutions.moving.vehicles.entities.VehiclePhoto;
+import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.repositories.VehiclePhotoRepository;
+import com.rectasolutions.moving.vehicles.utils.Assistant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +52,7 @@ class VehiclePhotoServiceTest {
         user.setStatus("busy");
         user.setLatitude(123);
         user.setLongitude(456);
+        user.setPhotoPath("path");
 
         VehicleCategory vehicleCategory = new VehicleCategory();
         vehicleCategory.setId(1);
@@ -126,7 +135,24 @@ class VehiclePhotoServiceTest {
     }
 
     @Test
-    void saveVehiclePhoto() {
+    void saveVehiclePhoto() throws FailToUploadException {
+        Path path = Paths.get("/test/resources/myPhoto.jpg");
+        String name = "myPhoto.jpg";
+        String originalFileName = "myPhoto.jpg";
+        String contentType = "image/jpg";
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(path);
+        } catch (final IOException e) {
+        }
+        MultipartFile multipartFile = new MockMultipartFile(name, originalFileName, contentType, content);
+        MultipartFile[] multipartFiles = new MultipartFile[1];
+        multipartFiles[0] = multipartFile;
+        VehiclePhoto returnedVehiclePhoto = vehiclePhotoList.get(0);
+        returnedVehiclePhoto.setPhotoPath(Assistant.getImagesStorePath());
+        when(vehiclePhotoService.saveVehiclePhoto(multipartFiles, 1)).thenReturn(returnedVehiclePhoto);
+        assertNotNull(vehiclePhotoService.saveVehiclePhoto(multipartFiles,1));
+        assertEquals(1, vehiclePhotoService.saveVehiclePhoto(multipartFiles,1).getId());
     }
 
     @Test

@@ -69,6 +69,7 @@ class VehicleCategoryServiceTest {
         assertEquals(30, vehicleCategoryService.getVehicleCategoryById(1).get().getPayload());
         assertEquals("1", vehicleCategoryService.getVehicleCategoryById(1).get().getType());
         assertEquals(30, vehicleCategoryService.getVehicleCategoryById(1).get().getVolume());
+        assertEquals(true, vehicleCategoryService.getVehicleCategoryById(1).get().isInstantDelOption());
         assertNull(vehicleCategoryService.getVehicleCategoryById(1).get().getParentId());
     }
 
@@ -111,6 +112,7 @@ class VehicleCategoryServiceTest {
         assertEquals(2, vehicleCategoryService.getVehicleCategoryByDistance(20).getNextTime());
         assertEquals(20, vehicleCategoryService.getVehicleCategoryByDistance(20).getDeliveryDistance());
         assertEquals(10, vehicleCategoryService.getVehicleCategoryByDistance(20).getCallDistance());
+        assertEquals(true, vehicleCategoryService.getVehicleCategoryByDistance(20).isInstantDelOption());
     }
 
     @Test
@@ -125,5 +127,6 @@ class VehicleCategoryServiceTest {
         assertEquals(2, vehicleCategoryService.getVehicleCategoryByDistanceAndPayload(20,30).getNextTime());
         assertEquals(20, vehicleCategoryService.getVehicleCategoryByDistanceAndPayload(20,30).getDeliveryDistance());
         assertEquals(10, vehicleCategoryService.getVehicleCategoryByDistanceAndPayload(20,30).getCallDistance());
+        assertEquals(true, vehicleCategoryService.getVehicleCategoryByDistanceAndPayload(20,30).isInstantDelOption());
     }
 }

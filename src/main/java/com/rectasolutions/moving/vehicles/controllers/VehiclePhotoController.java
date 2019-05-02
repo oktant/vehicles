@@ -1,6 +1,7 @@
 package com.rectasolutions.moving.vehicles.controllers;
 
 import com.rectasolutions.moving.vehicles.entities.*;
+import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,15 @@ public class VehiclePhotoController {
         return new ResponseEntity<>(vehiclePhotoService.getVehiclePhotosByVehicleId(vehicleId), HttpStatus.OK);
     }
 
-    @PostMapping("/photos")
-    public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files, @RequestParam(value = "vehicleId") int vehicleId) {
-        return vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
+    @PostMapping(value = "/photos", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files,
+                                                   @RequestParam(value = "vehicleId") int vehicleId) {
+        try {
+            vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
+            return new ResponseEntity<>("Photos have been added", HttpStatus.OK);
+        } catch (FailToUploadException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/photos/{id}")
