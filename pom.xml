@@ -133,6 +133,8 @@
 				<configuration>
 					<excludes>
 						<exclude>**/com/rectasolutions/moving/vehicles/swagger/*</exclude>
+						<exclude>**/com/rectasolutions/moving/vehicles/entities/*</exclude>
+
 					</excludes>
 				</configuration>
 				<executions>
