@@ -1,5 +1,6 @@
 package com.rectasolutions.moving.vehicles.controllers;
 
+import com.rectasolutions.moving.vehicles.beans.PostedImage;
 import com.rectasolutions.moving.vehicles.entities.*;
 import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.services.*;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +35,10 @@ public class VehiclePhotoController {
         return new ResponseEntity<>(vehiclePhotoService.getVehiclePhotosByVehicleId(vehicleId), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/photos", consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<String> saveVehiclePhoto(@RequestParam(value = "files") MultipartFile[] files,
-                                                   @RequestParam(value = "vehicleId") int vehicleId) {
+    @PostMapping(value = "/photos")
+    public ResponseEntity<String> saveVehiclePhoto(@RequestBody PostedImage postedImage) {
         try {
-            vehiclePhotoService.saveVehiclePhoto(files, vehicleId);
+            vehiclePhotoService.saveVehiclePhoto(postedImage);
             return new ResponseEntity<>("Photos have been added", HttpStatus.OK);
         } catch (FailToUploadException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
