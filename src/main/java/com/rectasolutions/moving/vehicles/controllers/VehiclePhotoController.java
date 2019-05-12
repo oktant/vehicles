@@ -1,13 +1,17 @@
 package com.rectasolutions.moving.vehicles.controllers;
 
+import com.rectasolutions.moving.vehicles.beans.ImageInfo;
 import com.rectasolutions.moving.vehicles.beans.PostedImage;
 import com.rectasolutions.moving.vehicles.entities.*;
-import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
+import com.rectasolutions.moving.vehicles.exceptions.FileIsEmptyException;
+import com.rectasolutions.moving.vehicles.exceptions.WrongPhotoTypeException;
 import com.rectasolutions.moving.vehicles.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,9 +42,10 @@ public class VehiclePhotoController {
     @PostMapping(value = "/photos")
     public ResponseEntity<String> saveVehiclePhoto(@RequestBody PostedImage postedImage) {
         try {
+            validatePostedImage(postedImage);
             vehiclePhotoService.saveVehiclePhoto(postedImage);
             return new ResponseEntity<>("Photos have been added", HttpStatus.OK);
-        } catch (FailToUploadException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -52,5 +57,21 @@ public class VehiclePhotoController {
             return new ResponseEntity<>("The photo is not found", HttpStatus.NOT_FOUND);
         }
         return vehiclePhotoService.deleteVehiclePhoto(vehiclePhoto.get());
+    }
+
+    private void validatePostedImage(PostedImage postedImage) throws FileIsEmptyException, WrongPhotoTypeException {
+        if (postedImage == null || postedImage.getImageInfoList().size() == 0){
+            throw new FileIsEmptyException();
+        }
+        for (ImageInfo imageInfo : postedImage.getImageInfoList()){
+            if (!checkPhotoType(imageInfo.getContentType())) {
+                throw new WrongPhotoTypeException();
+            }
+        }
+    }
+
+    private boolean checkPhotoType(String contentType) {
+        final List<String> contentTypeList = Arrays.asList("image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/svg+xml", "image/tiff", "image/vnd.microsoft.icon", "image/vnd.wap.wbmp", "image/webp");
+        return contentTypeList.contains(contentType);
     }
 }

@@ -15,7 +15,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,17 +72,12 @@ public class VehiclePhotoService {
     public ResponseEntity<String> deleteVehiclePhoto(VehiclePhoto vehiclePhoto) {
         Path path = Paths.get(vehiclePhoto.getPhotoPath());
         try {
-            Files.delete(path);
             vehiclePhotoRepository.delete(vehiclePhoto);
+            Files.delete(path);
             return new ResponseEntity<>("The photo has been deleted", HttpStatus.OK);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private boolean checkPhotoType(String contentType) {
-        final List<String> contentTypeList = Arrays.asList("image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/svg+xml", "image/tiff", "image/vnd.microsoft.icon", "image/vnd.wap.wbmp", "image/webp");
-        return contentTypeList.contains(contentType);
     }
 
     private byte[] decodedByteArray(String imageString){

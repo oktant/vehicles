@@ -1,7 +1,7 @@
 package com.rectasolutions.moving.vehicles.exceptions;
 
-public class WrongTypeException extends Exception {
-    public WrongTypeException(){
+public class WrongPhotoTypeException extends Exception {
+    public WrongPhotoTypeException(){
         super("Wrong type for picture");
     }
 }
