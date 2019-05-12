@@ -60,7 +60,7 @@ public class VehiclePhotoController {
     }
 
     private void validatePostedImage(PostedImage postedImage) throws FileIsEmptyException, WrongPhotoTypeException {
-        if (postedImage == null || postedImage.getImageInfoList().size() == 0){
+        if (postedImage == null || postedImage.getImageInfoList().isEmpty()){
             throw new FileIsEmptyException();
         }
         for (ImageInfo imageInfo : postedImage.getImageInfoList()){

@@ -53,7 +53,7 @@ public class VehiclePhotoService {
                 File dir = new File(rootPath);
                 if (!dir.exists())
                     dir.mkdirs();
-                String path = rootPath + "/" + fileName;
+                String path = rootPath + Assistant.getFolderSeperator() + fileName;
 
                 try(BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(path)))) {
                     buffStream.write(bytes);

@@ -21,4 +21,10 @@ public final class Assistant {
         return "linux path";
     }
 
+    public static String getFolderSeperator() {
+        if (windows) {
+            return "/";
+        }
+        return "linux";
+    }
 }
