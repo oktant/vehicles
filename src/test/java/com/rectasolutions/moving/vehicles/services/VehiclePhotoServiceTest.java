@@ -144,6 +144,8 @@ class VehiclePhotoServiceTest {
         PostedImage postedImage = new PostedImage();
         postedImage.setImageInfoList(imageInfoList);
         postedImage.setVehicleId(1);
+        assertNotNull(postedImage.getImageInfoList());
+        assertEquals(1, postedImage.getVehicleId());
         VehiclePhoto returnedVehiclePhoto = vehiclePhotoList.get(0);
         returnedVehiclePhoto.setPhotoPath(Assistant.getImagesStorePath());
         when(vehiclePhotoService.saveVehiclePhoto(postedImage)).thenReturn(returnedVehiclePhoto);
