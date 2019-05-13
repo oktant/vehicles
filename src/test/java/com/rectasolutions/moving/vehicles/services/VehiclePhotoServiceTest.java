@@ -139,6 +139,9 @@ class VehiclePhotoServiceTest {
         imageInfo.setContentType(contentType);
         imageInfo.setEncodedImage(encodedImage);
         imageInfo.setFileName(fileName);
+        assertEquals(fileName, imageInfo.getFileName());
+        assertEquals(encodedImage, imageInfo.getEncodedImage());
+        assertEquals(contentType, imageInfo.getContentType());
         List<ImageInfo> imageInfoList = new ArrayList<>();
         imageInfoList.add(imageInfo);
         PostedImage postedImage = new PostedImage();

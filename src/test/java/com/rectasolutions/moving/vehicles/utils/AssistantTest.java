@@ -7,6 +7,7 @@ class AssistantTest {
 
     @Test
     void getImagesStorePath() {
-        assertNotEquals("D:/VehiclePhotos", Assistant.getImagesStorePath());
+        assertNotNull(Assistant.getImagesStorePath());
+        assertNotNull(Assistant.getFolderSeperator());
     }
 }
