@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -174,11 +175,9 @@ class VehiclePhotoServiceTest {
   }
 
   @Test
-  void deleteVehiclePhoto() {
-    when(vehiclePhotoService.deleteVehiclePhoto(any(VehiclePhoto.class)))
-        .thenReturn(new ResponseEntity<>("The photo has been deleted", HttpStatus.OK));
-    assertNotNull(vehiclePhotoService.deleteVehiclePhoto(new VehiclePhoto()));
-    assertEquals(
-        HttpStatus.OK, vehiclePhotoService.deleteVehiclePhoto(new VehiclePhoto()).getStatusCode());
+  void deleteVehiclePhoto() throws IOException {
+    doNothing().when(vehiclePhotoService).deleteVehiclePhoto(any(VehiclePhoto.class));
+    vehiclePhotoService.deleteVehiclePhoto(new VehiclePhoto());
+    verify(vehiclePhotoService).deleteVehiclePhoto(any(VehiclePhoto.class));
   }
 }
