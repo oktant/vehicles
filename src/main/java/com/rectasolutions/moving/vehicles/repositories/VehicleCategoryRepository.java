@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface VehicleCategoryRepository extends JpaRepository<VehicleCategory,Integer> {
     List<VehicleCategory> findByParentId(int parentId);
-    VehicleCategory save(VehicleCategory vehicleCategory);
 
     @Query(value = "SELECT u.* FROM Vehicle_Category u WHERE u.delivery_Distance >= ?1 order by u.id limit 1",
             nativeQuery = true)

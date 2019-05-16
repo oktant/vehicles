@@ -20,67 +20,63 @@ import java.util.Optional;
 
 @Service
 public class VehiclePhotoService {
-    private VehiclePhotoRepository vehiclePhotoRepository;
-    private VehicleService vehicleService;
+  private VehiclePhotoRepository vehiclePhotoRepository;
+  private VehicleService vehicleService;
 
-    @Autowired
-    public VehiclePhotoService(VehiclePhotoRepository vehiclePhotoRepository, VehicleService vehicleService){
-        this.vehiclePhotoRepository = vehiclePhotoRepository;
-        this.vehicleService = vehicleService;
-    }
+  @Autowired
+  public VehiclePhotoService(
+      VehiclePhotoRepository vehiclePhotoRepository, VehicleService vehicleService) {
+    this.vehiclePhotoRepository = vehiclePhotoRepository;
+    this.vehicleService = vehicleService;
+  }
 
-    public Optional<VehiclePhoto> getVehiclePhotoById(int id){
-        return vehiclePhotoRepository.findById(id);
-    }
+  public Optional<VehiclePhoto> getVehiclePhotoById(int id) {
+    return vehiclePhotoRepository.findById(id);
+  }
 
-    public List<VehiclePhoto> getAllVehiclePhotos(){
-        return vehiclePhotoRepository.findAll();
-    }
+  public List<VehiclePhoto> getAllVehiclePhotos() {
+    return vehiclePhotoRepository.findAll();
+  }
 
-    public List<VehiclePhoto> getVehiclePhotosByVehicleId(int vehicleId){
-        return vehiclePhotoRepository.findByVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
-    }
+  public List<VehiclePhoto> getVehiclePhotosByVehicleId(int vehicleId) {
+    return vehiclePhotoRepository.findByVehicle(
+        vehicleService.getVehicleById(vehicleId).orElse(null));
+  }
 
-    public VehiclePhoto saveVehiclePhoto(PostedImage postedImage) throws FailToUploadException {
-        String fileName = null;
-        int vehicleId = postedImage.getVehicleId();
-        VehiclePhoto vehiclePhoto = new VehiclePhoto();
-        try{
-            for (ImageInfo imageInfo : postedImage.getImageInfoList()) {
-                fileName = imageInfo.getFileName();
-                byte[] bytes = decodedByteArray(imageInfo.getEncodedImage());
-                String rootPath = Assistant.getImagesStorePath();
-                File dir = new File(rootPath);
-                if (!dir.exists())
-                    dir.mkdirs();
-                String path = rootPath + Assistant.getFolderSeperator() + fileName;
+  public VehiclePhoto saveVehiclePhoto(PostedImage postedImage) throws FailToUploadException {
+    String fileName = null;
+    int vehicleId = postedImage.getVehicleId();
+    VehiclePhoto vehiclePhoto = new VehiclePhoto();
+    try {
+      for (ImageInfo imageInfo : postedImage.getImageInfoList()) {
+        fileName = imageInfo.getFileName();
+        byte[] bytes = decodedByteArray(imageInfo.getEncodedImage());
+        String rootPath = Assistant.getImagesStorePath();
+        File dir = new File(rootPath);
+        if (!dir.exists()) dir.mkdirs();
+        String path = rootPath + Assistant.getFolderSeperator() + fileName;
 
-                try(BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(path)))) {
-                    buffStream.write(bytes);
-                }
-                vehiclePhoto.setPhotoPath(path);
-                vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
-                vehiclePhotoRepository.save(vehiclePhoto);
-            }
+        try (BufferedOutputStream buffStream =
+            new BufferedOutputStream(new FileOutputStream(new File(path)))) {
+          buffStream.write(bytes);
         }
-        catch (Exception e) {
-            throw new FailToUploadException(fileName + ": " + e.getMessage());
-        }
-        return vehiclePhoto;
+        vehiclePhoto.setPhotoPath(path);
+        vehiclePhoto.setVehicle(vehicleService.getVehicleById(vehicleId).orElse(null));
+        vehiclePhotoRepository.save(vehiclePhoto);
+      }
+    } catch (Exception e) {
+      throw new FailToUploadException(fileName + ": " + e.getMessage());
     }
+    return vehiclePhoto;
+  }
 
-    public ResponseEntity<String> deleteVehiclePhoto(VehiclePhoto vehiclePhoto) {
-        Path path = Paths.get(vehiclePhoto.getPhotoPath());
-        try {
-            vehiclePhotoRepository.delete(vehiclePhoto);
-            Files.delete(path);
-            return new ResponseEntity<>("The photo has been deleted", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+  public void deleteVehiclePhoto(VehiclePhoto vehiclePhoto) throws IOException {
+    Path path = Paths.get(vehiclePhoto.getPhotoPath());
+    vehiclePhotoRepository.delete(vehiclePhoto);
+    Files.delete(path);
+  }
 
-    private byte[] decodedByteArray(String imageString){
-        return Base64.decodeBase64(imageString.getBytes());
-    }
+  private byte[] decodedByteArray(String imageString) {
+    return Base64.decodeBase64(imageString.getBytes());
+  }
 }

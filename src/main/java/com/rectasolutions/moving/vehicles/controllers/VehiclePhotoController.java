@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,12 @@ public class VehiclePhotoController {
         if (!vehiclePhoto.isPresent()) {
             return new ResponseEntity<>("The photo is not found", HttpStatus.NOT_FOUND);
         }
-        return vehiclePhotoService.deleteVehiclePhoto(vehiclePhoto.get());
+        try {
+            vehiclePhotoService.deleteVehiclePhoto(vehiclePhoto.get());
+        } catch (IOException e) {
+            return new ResponseEntity<>("The photo is not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("The photo has been deleted", HttpStatus.OK);
     }
 
     private void validatePostedImage(PostedImage postedImage) throws FileIsEmptyException, WrongPhotoTypeException {
