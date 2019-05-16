@@ -8,13 +8,10 @@ import com.rectasolutions.moving.vehicles.entities.VehicleCategory;
 import com.rectasolutions.moving.vehicles.entities.VehiclePhoto;
 import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.repositories.VehiclePhotoRepository;
-import com.rectasolutions.moving.vehicles.utils.Assistant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,7 +165,7 @@ class VehiclePhotoServiceTest {
     assertNotNull(postedImage.getImageInfoList());
     assertEquals(1, postedImage.getVehicleId());
     VehiclePhoto returnedVehiclePhoto = vehiclePhotoList.get(0);
-    returnedVehiclePhoto.setPhotoPath(Assistant.getImagesStorePath());
+    returnedVehiclePhoto.setPhotoPath("D:/VehiclePhotos/");
     when(vehiclePhotoService.saveVehiclePhoto(postedImage)).thenReturn(returnedVehiclePhoto);
     assertNotNull(vehiclePhotoService.saveVehiclePhoto(postedImage));
     assertEquals(1, vehiclePhotoService.saveVehiclePhoto(postedImage).getId());

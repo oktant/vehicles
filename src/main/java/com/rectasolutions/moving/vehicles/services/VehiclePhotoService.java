@@ -5,11 +5,9 @@ import com.rectasolutions.moving.vehicles.beans.PostedImage;
 import com.rectasolutions.moving.vehicles.entities.VehiclePhoto;
 import com.rectasolutions.moving.vehicles.exceptions.FailToUploadException;
 import com.rectasolutions.moving.vehicles.repositories.VehiclePhotoRepository;
-import com.rectasolutions.moving.vehicles.utils.Assistant;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.nio.file.Files;
@@ -22,6 +20,12 @@ import java.util.Optional;
 public class VehiclePhotoService {
   private VehiclePhotoRepository vehiclePhotoRepository;
   private VehicleService vehicleService;
+
+  @Value("D:/VehiclePhotos/")
+  private String imagesStorePath;
+
+  @Value("/")
+  private String folderSeperator;
 
   @Autowired
   public VehiclePhotoService(
@@ -51,10 +55,9 @@ public class VehiclePhotoService {
       for (ImageInfo imageInfo : postedImage.getImageInfoList()) {
         fileName = imageInfo.getFileName();
         byte[] bytes = decodedByteArray(imageInfo.getEncodedImage());
-        String rootPath = Assistant.getImagesStorePath();
-        File dir = new File(rootPath);
+        File dir = new File(imagesStorePath);
         if (!dir.exists()) dir.mkdirs();
-        String path = rootPath + Assistant.getFolderSeperator() + fileName;
+        String path = imagesStorePath + folderSeperator + fileName;
 
         try (BufferedOutputStream buffStream =
             new BufferedOutputStream(new FileOutputStream(new File(path)))) {
