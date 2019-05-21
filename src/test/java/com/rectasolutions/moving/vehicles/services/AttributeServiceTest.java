@@ -77,9 +77,7 @@ class AttributeServiceTest {
 
   @Test
   void deleteAttribute() {
-      Attribute newAttribute = new Attribute();
-      newAttribute.setId(3);
-      newAttribute.setAttributeName("height");
+      Attribute newAttribute = mock(Attribute.class);
       attributeService.deleteAttribute(newAttribute);
   }
 }
