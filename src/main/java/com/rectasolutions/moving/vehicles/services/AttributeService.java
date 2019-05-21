@@ -18,10 +18,12 @@ public class AttributeService {
     }
 
     public List<Attribute> getAllAttributes(){
+
         return attributeRepository.findAll();
     }
 
     public Attribute saveAttribute(Attribute attribute){
+
         return attributeRepository.save(attribute);
     }
 

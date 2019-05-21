@@ -24,7 +24,7 @@ class AttributeServiceTest {
 
   @Mock private AttributeRepository attributeRepository;
 
-  @Spy @InjectMocks private AttributeService attributeService;
+  @InjectMocks private AttributeService attributeService;
 
   @BeforeEach
   void setUp() {
@@ -70,16 +70,16 @@ class AttributeServiceTest {
     Attribute newAttribute = new Attribute();
     newAttribute.setId(3);
     newAttribute.setAttributeName("height");
-    doReturn(newAttribute).when(attributeService).saveAttribute(any(Attribute.class));
-    assertNotNull(attributeService.saveAttribute(new Attribute()));
-    assertEquals(3, attributeService.saveAttribute(new Attribute()).getId());
-    assertEquals("height", attributeService.saveAttribute(new Attribute()).getAttributeName());
+    when(attributeService.saveAttribute(newAttribute)).thenReturn(newAttribute);
+    assertEquals(attributeService.saveAttribute(newAttribute).getId(), newAttribute.getId());
+
   }
 
   @Test
   void deleteAttribute() {
-    doNothing().when(attributeService).deleteAttribute(any(Attribute.class));
-    attributeService.deleteAttribute(new Attribute());
-    verify(attributeService).deleteAttribute(any(Attribute.class));
+      Attribute newAttribute = new Attribute();
+      newAttribute.setId(3);
+      newAttribute.setAttributeName("height");
+      attributeService.deleteAttribute(newAttribute);
   }
 }
